@@ -45,6 +45,8 @@ LIB_PATH = # -L./xxx
 CFLAGS = -Wall -c 
 CC = gcc  
 
+LDFLAGS += -Wl,-Map,$(BUILD_DIR)/$(TARGET).map
+
 #######################################
 # build the application
 #######################################
@@ -55,7 +57,7 @@ vpath %.c $(sort $(dir $(C_SOURCES)))
 
 $(TARGET): $(OBJECTS) | $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
-	$(CC) $(OBJECTS) $(LIB_PATH) $(LIBS) -o $(BUILD_DIR)/$(TARGET)
+	$(CC) $(OBJECTS) $(LIB_PATH) $(LIBS) $(LDFLAGS) -o $(BUILD_DIR)/$(TARGET)
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 	$(CC) $(C_INCLUDES) $(C_DEFS) $(CFLAGS) $< -o $@  
